@@ -217,6 +217,7 @@
             var drawingManager = new google.maps.drawing.DrawingManager();
             drawingManager.setMap(map);
         }  
+        
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAOVqHk_qwDSvrDVGWhpICzOhfEVTrw0XQ&callback=initMap"></script>
 @stop
