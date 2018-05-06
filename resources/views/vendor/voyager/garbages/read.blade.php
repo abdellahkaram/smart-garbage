@@ -136,7 +136,7 @@
                         <h3 class="panel-title">map</h3>
                     </div>
                     <div class="panel-body" style="padding-top:0;">
-                        <div id="map" longitude="{{ $longitude }}" latitude="{{ $latitude }}" style="width:100%;height:600px;background:yellow"></div>
+                        <div id="map" longitude="{{ $longitude }}" latitude="{{ $latitude }}" style="width:100%;height:600px;background:#F9F9F9"></div>
                     </div>
                 </div>
             </div>
@@ -177,6 +177,7 @@
     @endif
     <script>
         var deleteFormAction;
+
         $('.delete').on('click', function (e) {
             var form = $('#delete_form')[0];
 
@@ -191,41 +192,31 @@
 
             $('#delete_modal').modal('show');
         });
-        var map;
-      function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 18,
-          center: new google.maps.LatLng(document.getElementById('map').getAttribute("longitude"),document.getElementById('map').getAttribute("latitude")),
-          mapTypeId: 'terrain'
-        });
 
-        // Create a <script> tag and set the USGS URL as the source.
-        var script = document.createElement('script');
-        // This example uses a local copy of the GeoJSON stored at
-        // http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.geojsonp
-        script.src = 'https://developers.google.com/maps/documentation/javascript/examples/json/earthquake_GeoJSONP.js';
-        document.getElementsByTagName('head')[0].appendChild(script);
-      }
-
-      // Loop through the results array and place a marker for each
-      // set of coordinates.
-      window.eqfeed_callback = function(results) {
-          
-        var icon = {
-                        url: "http://icons.iconarchive.com/icons/photoshopedia/xedia/256/Recycle-Bin-Empty-icon.png", // url
-                        scaledSize: new google.maps.Size(50, 50), // scaled size
-                        origin: new google.maps.Point(0,0), // origin
-                        anchor: new google.maps.Point(0, 0) // anchor
-                    };
-          var latLng = new google.maps.LatLng(document.getElementById('map').getAttribute("longitude"),document.getElementById('map').getAttribute("latitude"));
-          var marker = new google.maps.Marker({
-            position: latLng,
-            icon: icon,
-            map: map
-          });
-        
-      }
+        function initMap() {
+            var uluru = {lat: parseFloat(document.getElementById('map').getAttribute("longitude")), lng: parseFloat(document.getElementById('map').getAttribute("latitude"))};
+            
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 18,
+                center: uluru
+            });
+            
+            var icon = {
+                url: "http://icons.iconarchive.com/icons/photoshopedia/xedia/256/Recycle-Bin-Empty-icon.png",
+                scaledSize: new google.maps.Size(50, 50),
+                origin: new google.maps.Point(0,0),
+                anchor: new google.maps.Point(0, 0)
+            };
+            
+            var marker = new google.maps.Marker({
+                position: uluru,
+                map: map,
+                icon: icon
+            });
+            
+            var drawingManager = new google.maps.drawing.DrawingManager();
+            drawingManager.setMap(map);
+        }  
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAOVqHk_qwDSvrDVGWhpICzOhfEVTrw0XQ&callback=initMap"></script>
-    
 @stop
